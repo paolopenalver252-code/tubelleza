@@ -1,0 +1,94 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import ServiceSection from '@/components/ServiceSection.astro';
+import RelatedLinks from '@/components/RelatedLinks.astro';
+import BookingSection from '@/components/BookingSection.astro';
+import { aesthetics } from '@/data/services';
+import heroImg from '@/assets/images/centro/cabina-aparatologia.jpg';
+import facialImg from '@/assets/images/experiencias/facial-toalla-turbante.png';
+
+const [face, faceBody, body, combined] = aesthetics;
+---
+
+<BaseLayout
+  title="Aparatología estética no invasiva en Palma | Tu Belleza Holística"
+  description="Radiofrecuencia, Indiba, presoterapia, cavitación, fototerapia, altafrecuencia y limpieza facial con peeling ultrasónico en Palma de Mallorca. Precios y duración por sesión."
+  ogImage={heroImg}
+>
+  <PageHero
+    eyebrow="Aparatología estética"
+    title="Tecnología no invasiva,"
+    accent="en un entorno sin prisas"
+    intro="Tratamientos de aparatología para rostro y cuerpo que se combinan con el cuidado manual y la calma de una cabina privada."
+    image={heroImg}
+    alt="Cabina del centro con camillas y equipos de aparatología estética, iluminada con luz ambiental"
+    position="55% 50%"
+  >
+    <nav class="chip-nav" aria-label="Ir a una sección">
+      <a href="#rostro">Rostro</a>
+      <a href="#rostro-y-cuerpo">Rostro y cuerpo</a>
+      <a href="#cuerpo">Cuerpo</a>
+      <a href="#combinados">Combinados</a>
+    </nav>
+  </PageHero>
+
+  <ServiceSection
+    id={face.id}
+    eyebrow="Aparatología facial"
+    title={face.title}
+    intro="Limpieza, luz y alta frecuencia para el cuidado de la piel del rostro."
+    items={face.items}
+    image={facialImg}
+    alt="Tratamiento facial con la cabeza envuelta en una toalla blanca y las manos de la terapeuta sobre las mejillas"
+  />
+
+  <ServiceSection
+    id={faceBody.id}
+    eyebrow="Facial y corporal"
+    title={faceBody.title}
+    intro="Técnicas que se aplican tanto en el rostro como en zonas del cuerpo."
+    items={faceBody.items}
+    tone="ivory"
+  />
+
+  <ServiceSection
+    id={body.id}
+    eyebrow="Aparatología corporal"
+    title={body.title}
+    intro="Presoterapia, ultrasonido, electroestimulación y luz para el cuidado corporal."
+    items={body.items}
+  />
+
+  <ServiceSection
+    id={combined.id}
+    eyebrow="Spa y tratamientos combinados"
+    title={combined.title}
+    intro={combined.intro}
+    items={combined.items}
+    tone="sand"
+  >
+    <p class="disclaimer small">
+      Los tratamientos de aparatología son estéticos y no sustituyen la valoración de un profesional sanitario. Si está
+      embarazada o tiene alguna condición médica, coménteselo al centro antes de reservar.
+    </p>
+  </ServiceSection>
+
+  <RelatedLinks
+    links={[
+      { href: '/promociones/', label: 'Rituales con aparatología', text: 'Masaje y aparatología drenante en una misma sesión.' },
+      { href: '/masajes/', label: 'Masajes', text: 'Drenaje linfático, terapéutico y Kobido.' },
+      { href: '/spa-privado/', label: 'Spa privado', text: 'Sauna de infracarbono con bioluz y turmalina.' },
+    ]}
+  />
+
+  <BookingSection title="Reserve su tratamiento" subject="un tratamiento de aparatología" />
+</BaseLayout>
+
+<style>
+  .disclaimer {
+    margin-top: 2rem;
+    color: var(--ink-mute);
+    max-width: 40rem;
+  }
+</style>

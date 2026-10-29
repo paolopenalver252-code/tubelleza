@@ -1,0 +1,76 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import ServiceSection from '@/components/ServiceSection.astro';
+import GiftBand from '@/components/GiftBand.astro';
+import RelatedLinks from '@/components/RelatedLinks.astro';
+import BookingSection from '@/components/BookingSection.astro';
+import { individualRituals } from '@/data/services';
+import heroImg from '@/assets/images/experiencias/masaje-espalda-luz-calida.png';
+import coffeeImg from '@/assets/images/experiencias/ritual-cafe-arabe-hombre.png';
+
+const relax = individualRituals.slice(0, 3);
+const renew = individualRituals.slice(3, 5);
+const drain = individualRituals.slice(5);
+---
+
+<BaseLayout
+  title="Promociones de masajes y spa en Palma | Tu Belleza Holística"
+  description="Rituales individuales a precio promocional en Palma: masaje con aromaterapia y calor, sauna y esencias, exfoliación con café árabe y rituales drenantes con tratamiento facial."
+  ogImage={heroImg}
+>
+  <PageHero
+    eyebrow="Rituales y promociones"
+    title="Rituales completos"
+    accent="para una persona"
+    intro="Combinaciones de masaje, exfoliación, sauna, facial y aparatología drenante en una sola visita."
+    image={heroImg}
+    alt="Masaje de espalda con aceite bajo una luz cálida y tenue"
+    position="50% 50%"
+  >
+    <nav class="chip-nav" aria-label="Ir a una sección">
+      <a href="#relajacion">Relajación</a>
+      <a href="#exfoliacion">Exfoliación y sauna</a>
+      <a href="#drenantes">Drenantes y faciales</a>
+      <a href="/parejas/">En pareja</a>
+    </nav>
+  </PageHero>
+
+  <ServiceSection
+    id="relajacion"
+    eyebrow="Relajación"
+    title="Masajes con aroma y calor"
+    items={relax}
+    notice="Precios promocionales. Sus condiciones y vigencia se confirman al reservar."
+  />
+
+  <ServiceSection
+    id="exfoliacion"
+    eyebrow="Exfoliación y sauna"
+    title="Café árabe, piel renovada"
+    items={renew}
+    image={coffeeImg}
+    alt="Exfoliación con café molido sobre la espalda de un cliente, con velas y cuencos de madera"
+    tone="ivory"
+  />
+
+  <ServiceSection
+    id="drenantes"
+    eyebrow="Drenantes y faciales"
+    title="Rituales con aparatología y facial"
+    items={drain}
+  />
+
+  <GiftBand />
+
+  <RelatedLinks
+    links={[
+      { href: '/parejas/', label: 'Promociones en pareja', text: 'Rituales para dos con sauna, bioluz o jacuzzi.' },
+      { href: '/masajes/', label: 'Masajes', text: 'La carta de masajes con precio habitual.' },
+      { href: '/spa-privado/', label: 'Spa privado', text: 'El circuito completo de jacuzzi y sauna.' },
+    ]}
+  />
+
+  <BookingSection title="Reserve su ritual" subject="un ritual de promoción" />
+</BaseLayout>
+

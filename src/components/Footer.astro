@@ -1,0 +1,209 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { nav, site, whatsappLink } from '@/data/site';
+import logo from '@/assets/images/marca/logo-arbol-de-la-vida.png';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer bg-deep">
+  <div class="wrap">
+    <div class="top">
+      <div class="intro">
+        <Image src={logo} alt="" width={88} height={88} class="logo" loading="lazy" />
+        <p class="statement">Un espacio privado para el bienestar, en el barrio de Llevant, Palma.</p>
+        <a class="btn btn-light" href={whatsappLink()} target="_blank" rel="noopener">
+          <Icon name="whatsapp" /> Reservar por WhatsApp
+        </a>
+      </div>
+
+      <div class="cols">
+        <nav aria-label="Pie de página">
+          <h2 class="col-title">Explorar</h2>
+          <ul>
+            {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+            <li><a href="/vales-regalo/">Vales regalo</a></li>
+            <li><a href="/reservar/">Reserva y contacto</a></li>
+          </ul>
+        </nav>
+
+        <div>
+          <h2 class="col-title">Visítenos</h2>
+          <address>
+            {site.address.street}<br />
+            {site.address.postalCode} {site.address.city}, Mallorca
+          </address>
+          <p class="hours">{site.hours.label}<br />{site.hours.time}<br />{site.hours.note}</p>
+        </div>
+
+        <div>
+          <h2 class="col-title">Contacto</h2>
+          <ul>
+            <li><a href={site.phone.href}>{site.phone.display}</a></li>
+            <li><a href={`mailto:${site.email}`} class="email">{site.email}</a></li>
+          </ul>
+          <ul class="social" aria-label="Redes sociales">
+            <li>
+              <a href={site.social.instagram} target="_blank" rel="noopener" aria-label="Instagram">
+                <Icon name="instagram" />
+              </a>
+            </li>
+            <li>
+              <a href={site.social.facebook} target="_blank" rel="noopener" aria-label="Facebook">
+                <Icon name="facebook" />
+              </a>
+            </li>
+            <li>
+              <a href={site.social.tiktok} target="_blank" rel="noopener" aria-label="TikTok">
+                <Icon name="tiktok" />
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom">
+      <ul class="legal" aria-label="Información legal">
+        {site.legal.map((l) => <li><a href={l.href} target="_blank" rel="noopener">{l.label}</a></li>)}
+      </ul>
+      <p class="small">
+        © {year} {site.name}.
+        {site.isDemo && ' Propuesta de rediseño (demo): los textos legales enlazan a la web actual.'}
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    /* Hueco inferior para que el botón flotante de WhatsApp no tape los enlaces legales. */
+    padding-block: clamp(3.5rem, 6vw, 6rem) calc(6rem + env(safe-area-inset-bottom));
+  }
+
+  .top {
+    display: grid;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  .intro {
+    display: grid;
+    justify-items: start;
+    gap: 1.5rem;
+  }
+
+  .logo {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--ivory);
+    padding: 3px;
+  }
+
+  .statement {
+    font-family: var(--font-serif);
+    font-size: var(--step-2);
+    line-height: 1.15;
+    max-width: 22ch;
+  }
+
+  .cols {
+    display: grid;
+    gap: 2.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .col-title {
+    margin-bottom: 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sand-300);
+  }
+
+  ul {
+    list-style: none;
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  a:not(.btn) {
+    text-decoration: none;
+    color: var(--on-dark);
+  }
+
+  /* Área táctil cómoda para los enlaces de texto del pie. */
+  nav a,
+  .cols ul:not(.social) a,
+  .legal a {
+    display: inline-block;
+    padding-block: 0.4rem;
+  }
+
+  a:not(.btn):hover {
+    text-decoration: underline;
+  }
+
+  address,
+  .hours {
+    font-style: normal;
+    color: var(--on-dark-soft);
+  }
+
+  .hours {
+    margin-top: 1rem;
+  }
+
+  .email {
+    overflow-wrap: anywhere;
+  }
+
+  .social {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .social a {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--line-dark);
+    border-radius: 50%;
+    transition: background-color 0.25s var(--ease);
+  }
+
+  .social a:hover {
+    background: rgb(243 239 229 / 0.08);
+  }
+
+  .bottom {
+    display: grid;
+    gap: 1rem;
+    padding-top: 1.75rem;
+    color: var(--on-dark-soft);
+  }
+
+  .legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    font-size: var(--step--1);
+  }
+
+  .legal a {
+    color: var(--on-dark-soft);
+  }
+
+  @media (min-width: 960px) {
+    .top {
+      grid-template-columns: 1fr 1.6fr;
+    }
+  }
+
+</style>

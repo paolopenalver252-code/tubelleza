@@ -1,0 +1,48 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { nav } from '@/data/site';
+---
+
+<BaseLayout
+  title="Página no encontrada | Tu Belleza Holística"
+  description="La página que busca no existe o ha cambiado de dirección."
+  overlayHeader={false}
+>
+  <section class="section">
+    <div class="wrap-narrow nf">
+      <p class="eyebrow">Error 404</p>
+      <h1 class="h1">Esta página <em>no existe</em></h1>
+      <p class="lead">Puede que haya cambiado de dirección. Estas son las secciones principales:</p>
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+        <li><a href="/reservar/">Reservar cita</a></li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf > * + * {
+    margin-top: 1.4rem;
+  }
+  ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    padding: 0 1.1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    text-decoration: none;
+  }
+  a:hover {
+    background: var(--forest-900);
+    color: var(--on-dark);
+  }
+</style>

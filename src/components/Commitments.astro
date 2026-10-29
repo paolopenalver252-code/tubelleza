@@ -1,0 +1,65 @@
+---
+// Compromisos concretos y verificables en la web actual: dan autoridad sin eslóganes.
+const items = [
+  { value: 'En exclusiva', text: 'El centro se cierra solo para usted durante su cita.' },
+  { value: '170 chorros', text: 'Jacuzzi privado con agua nueva en cada reserva y sin químicos.' },
+  { value: 'Para dos', text: 'Sauna de infracarbono de bambú, con bioluz y turmalina.' },
+  { value: '7 días', text: 'De lunes a domingo, de 08:00 a 21:00, con cita previa.' },
+];
+---
+
+<section class="commitments bg-stone" aria-label="Lo que garantiza cada visita">
+  <ul class="wrap">
+    {
+      items.map((item, i) => (
+        <li data-reveal style={`--delay:${i * 0.07}s`}>
+          <p class="value">{item.value}</p>
+          <p class="text">{item.text}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .commitments {
+    padding-block: clamp(2.25rem, 4vw, 3.25rem);
+    border-bottom: 1px solid var(--line);
+  }
+
+  ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.75rem 1.5rem;
+  }
+
+  li {
+    padding-left: 1rem;
+    border-left: 1px solid var(--line-strong);
+  }
+
+  .value {
+    font-family: var(--font-serif);
+    font-size: clamp(1.4rem, 1.1rem + 1.1vw, 2rem);
+    font-weight: 380;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--forest-900);
+  }
+
+  .text {
+    margin-top: 0.45rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 17rem;
+  }
+
+  @media (min-width: 900px) {
+    ul {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 2rem;
+    }
+  }
+</style>

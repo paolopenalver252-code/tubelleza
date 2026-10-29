@@ -1,0 +1,383 @@
+---
+import Icon from './Icon.astro';
+import { nav, site, whatsappLink } from '@/data/site';
+
+interface Props {
+  overlay?: boolean;
+}
+const { overlay = true } = Astro.props;
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+---
+
+<header class:list={['site-header', { 'is-overlay': overlay }]} data-header>
+  <div class="bar wrap">
+    <a class="brand" href="/" aria-label={`${site.name}, ir a la portada`}>
+      <span class="brand-name">Tu Belleza <em>Holística</em></span>
+      <span class="brand-place">Palma de Mallorca</span>
+    </a>
+
+    <nav class="nav-desktop" aria-label="Principal">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={path === item.href ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="actions">
+      <a class="btn btn-sm header-cta" href="/reservar/">Reservar cita</a>
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="menu-movil"
+        data-menu-open
+      >
+        <Icon name="menu" size={22} />
+        <span class="visually-hidden">Abrir menú</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu on-dark" id="menu-movil" role="dialog" aria-modal="true" aria-label="Menú" hidden data-menu>
+  <div class="mobile-top wrap">
+    <a class="brand" href="/">
+      <span class="brand-name">Tu Belleza <em>Holística</em></span>
+      <span class="brand-place">Palma de Mallorca</span>
+    </a>
+    <button class="menu-toggle" type="button" data-menu-close>
+      <Icon name="close" size={22} />
+      <span class="visually-hidden">Cerrar menú</span>
+    </button>
+  </div>
+  <nav class="mobile-nav wrap" aria-label="Principal (móvil)">
+    <ul>
+      <li><a href="/" aria-current={path === '/' ? 'page' : undefined}>Inicio</a></li>
+      {
+        nav.map((item) => (
+          <li>
+            <a href={item.href} aria-current={path === item.href ? 'page' : undefined}>
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+      <li><a href="/vales-regalo/" aria-current={path === '/vales-regalo/' ? 'page' : undefined}>Vales regalo</a></li>
+    </ul>
+  </nav>
+  <div class="mobile-foot wrap">
+    <a class="btn btn-light" href={whatsappLink()} target="_blank" rel="noopener">
+      <Icon name="whatsapp" /> Reservar por WhatsApp
+    </a>
+    <a class="btn btn-ghost-light" href={site.phone.href}><Icon name="phone" /> {site.phone.display}</a>
+    <p class="small">{site.hours.label} · {site.hours.time} · {site.hours.note}</p>
+  </div>
+</div>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    background: rgb(252 250 246 / 0.92);
+    backdrop-filter: saturate(1.2) blur(12px);
+    -webkit-backdrop-filter: saturate(1.2) blur(12px);
+    border-bottom: 1px solid var(--line);
+    transition:
+      background-color 0.35s var(--ease),
+      border-color 0.35s var(--ease),
+      color 0.35s var(--ease);
+  }
+
+  .site-header.is-overlay {
+    position: fixed;
+    inset: 0 0 auto 0;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom-color: transparent;
+    color: var(--on-dark);
+  }
+
+  .site-header.is-overlay.is-scrolled {
+    background: rgb(252 250 246 / 0.94);
+    backdrop-filter: saturate(1.2) blur(12px);
+    -webkit-backdrop-filter: saturate(1.2) blur(12px);
+    border-bottom-color: var(--line);
+    color: var(--ink);
+  }
+
+  .bar {
+    /* Mismo ancho que el contenido del hero para alinear logotipo y titular en pantallas grandes. */
+    width: min(100% - 2 * var(--gutter), 1720px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    line-height: 1;
+    flex: none;
+  }
+
+  .brand-name {
+    font-family: var(--font-serif);
+    font-size: 1.42rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+
+  .brand-name em {
+    font-style: italic;
+  }
+
+  .brand-place {
+    margin-top: 0.3rem;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  .nav-desktop {
+    display: none;
+  }
+
+  .nav-desktop ul {
+    display: flex;
+    gap: clamp(1rem, 2vw, 2rem);
+    list-style: none;
+  }
+
+  .nav-desktop a {
+    position: relative;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding-block: 0.5rem;
+  }
+
+  .nav-desktop a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.2rem;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease);
+  }
+
+  .nav-desktop a:hover::after,
+  .nav-desktop a[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .btn-sm {
+    min-height: 2.6rem;
+    padding: 0.55rem 1.15rem;
+    font-size: 0.88rem;
+  }
+
+  .is-overlay:not(.is-scrolled) .header-cta {
+    --btn-bg: var(--ivory);
+    --btn-fg: var(--forest-950);
+    --btn-bd: var(--ivory);
+  }
+
+  .header-cta {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 2.9rem;
+    height: 2.9rem;
+    border: 1px solid currentColor;
+    border-color: color-mix(in srgb, currentColor 35%, transparent);
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  @media (min-width: 560px) {
+    .header-cta {
+      display: inline-flex;
+    }
+  }
+
+  @media (min-width: 1140px) {
+    .nav-desktop {
+      display: block;
+    }
+    .bar > .actions .menu-toggle {
+      display: none;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .brand-name {
+      font-size: 1.25rem;
+    }
+  }
+
+  /* Menú móvil */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    background: var(--forest-950);
+    color: var(--on-dark);
+    overflow-y: auto;
+  }
+
+  .mobile-menu[hidden] {
+    display: none;
+  }
+
+  .mobile-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: var(--header-h);
+  }
+
+  .mobile-nav {
+    flex: 1;
+    padding-block: 1.5rem 2rem;
+  }
+
+  .mobile-nav ul {
+    list-style: none;
+    border-top: 1px solid var(--line-dark);
+  }
+
+  .mobile-nav li {
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  .mobile-nav a {
+    display: block;
+    padding: 0.85rem 0;
+    font-family: var(--font-serif);
+    font-size: clamp(1.7rem, 7vw, 2.3rem);
+    line-height: 1.15;
+    text-decoration: none;
+  }
+
+  .mobile-nav a[aria-current='page'] {
+    font-style: italic;
+    color: var(--sage-300);
+  }
+
+  .mobile-foot {
+    display: grid;
+    gap: 0.75rem;
+    padding-bottom: 2rem;
+  }
+
+  .mobile-foot p {
+    color: var(--on-dark-soft);
+    text-align: center;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .mobile-menu:not([hidden]) {
+      animation: menu-in 0.35s var(--ease);
+    }
+    @keyframes menu-in {
+      from {
+        opacity: 0;
+      }
+    }
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  const openBtn = document.querySelector<HTMLButtonElement>('[data-menu-open]');
+  const closeBtn = document.querySelector<HTMLButtonElement>('[data-menu-close]');
+
+  if (header?.classList.contains('is-overlay')) {
+    const update = () => header.classList.toggle('is-scrolled', window.scrollY > 40);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+  }
+
+  if (menu && openBtn && closeBtn) {
+    const focusables = () =>
+      Array.from(menu.querySelectorAll<HTMLElement>('a[href], button:not([disabled])'));
+
+    const close = () => {
+      menu.hidden = true;
+      document.body.style.overflow = '';
+      openBtn.setAttribute('aria-expanded', 'false');
+      openBtn.focus();
+    };
+
+    openBtn.addEventListener('click', () => {
+      menu.hidden = false;
+      document.body.style.overflow = 'hidden';
+      openBtn.setAttribute('aria-expanded', 'true');
+      closeBtn.focus();
+    });
+
+    closeBtn.addEventListener('click', close);
+
+    menu.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') close();
+      if (event.key !== 'Tab') return;
+      const list = focusables();
+      const first = list[0];
+      const last = list[list.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    // Cierra el menú al seguir un enlace (también anclas de la misma página).
+    menu.querySelectorAll('a').forEach((a) =>
+      a.addEventListener('click', () => {
+        menu.hidden = true;
+        document.body.style.overflow = '';
+        openBtn.setAttribute('aria-expanded', 'false');
+      }),
+    );
+
+    window.matchMedia('(min-width: 1140px)').addEventListener('change', (event) => {
+      if (event.matches && !menu.hidden) close();
+    });
+  }
+</script>

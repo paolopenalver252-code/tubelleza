@@ -1,0 +1,89 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { giftVouchers, giftVoucherValidity } from '@/data/services';
+import faceMassage from '@/assets/images/experiencias/masaje-facial-toalla-verde.png';
+---
+
+<section class="gift bg-ivory" aria-labelledby="gift-title">
+  <div class="media gift-media">
+    <Image
+      src={faceMassage}
+      alt="Masaje facial con las manos de la terapeuta sobre el rostro de una clienta, junto a dos tarros de crema"
+      widths={[480, 720, 1080]}
+      sizes="(min-width: 960px) 45vw, 100vw"
+      loading="lazy"
+      quality={70}
+    />
+  </div>
+  <div class="gift-copy" data-reveal>
+    <p class="eyebrow">Vales regalo</p>
+    <h2 id="gift-title" class="h2">Regale tiempo <em>para cuidarse</em></h2>
+    <p class="lead">Vales canjeables por los servicios del centro. {giftVoucherValidity}</p>
+    <ul class="amounts" aria-label="Importes disponibles">
+      {giftVouchers.map((v) => <li>{v.amount}</li>)}
+    </ul>
+    <div class="btn-row">
+      <a class="btn" href="/vales-regalo/">Ver vales regalo <Icon name="arrow" /></a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .gift {
+    display: grid;
+  }
+
+  .gift-media {
+    border-radius: 0;
+    aspect-ratio: 4 / 3;
+    background: var(--sand-200);
+  }
+
+  .gift-copy {
+    padding: clamp(3rem, 7vw, 6.5rem) var(--gutter);
+    align-self: center;
+  }
+
+  .gift-copy > * + * {
+    margin-top: 1.4rem;
+  }
+
+  .gift-copy > * {
+    max-width: 34rem;
+  }
+
+  .amounts {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 7.5rem));
+    gap: 0.6rem;
+  }
+
+  .amounts li {
+    padding: 0.9rem 0.5rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--paper);
+    color: var(--forest-900);
+    font-family: var(--font-serif);
+    font-size: clamp(1.45rem, 1.2rem + 1vw, 1.9rem);
+    line-height: 1;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  @media (min-width: 960px) {
+    .gift {
+      grid-template-columns: 1fr 1fr;
+      min-height: 560px;
+    }
+    .gift-media {
+      aspect-ratio: auto;
+      height: 100%;
+    }
+    .gift-copy {
+      padding-left: clamp(3rem, 6vw, 6rem);
+    }
+  }
+</style>

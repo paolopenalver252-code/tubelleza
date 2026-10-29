@@ -1,0 +1,224 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import ServiceSection from '@/components/ServiceSection.astro';
+import VideoPlayer from '@/components/VideoPlayer.astro';
+import RelatedLinks from '@/components/RelatedLinks.astro';
+import BookingSection from '@/components/BookingSection.astro';
+import { spa } from '@/data/services';
+import heroImg from '@/assets/images/centro/sauna-infracarbono-interior.jpg';
+import jacuzzi from '@/assets/images/centro/jacuzzi-privado.png';
+import saunaOutside from '@/assets/images/centro/sauna-infracarbono-exterior.jpg';
+import saunaRoom from '@/assets/images/centro/sala-sauna-mural-buda.png';
+---
+
+<BaseLayout
+  title="Spa privado con jacuzzi y sauna en Palma | Tu Belleza Holística"
+  description="Jacuzzi privado de 170 chorros con agua nueva en cada reserva y sauna de infracarbono para dos personas en Palma de Mallorca. Circuito de spa con masaje de aromaterapia."
+  ogImage={heroImg}
+>
+  <PageHero
+    eyebrow="Spa privado"
+    title="Un circuito de spa"
+    accent="que no se comparte"
+    intro="Jacuzzi y sauna de infracarbono para disfrutar en privado, solo o en pareja, como experiencia completa o junto a un masaje."
+    image={heroImg}
+    alt="Interior de la sauna de infracarbono del centro con bancos de madera y luz rosada"
+  />
+
+  <!-- Instalaciones -->
+  <section class="section bg-deep" aria-labelledby="inst-title">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <p class="eyebrow">Las instalaciones</p>
+        <h2 id="inst-title" class="h2">Dos espacios, <em>una misma calma</em></h2>
+      </div>
+
+      <div class="duo">
+        <article class="item" data-reveal aria-labelledby="jac-title">
+          <div class="media item-media">
+            <Image
+              src={jacuzzi}
+              alt="Jacuzzi privado del centro junto a cortinas de terciopelo azul"
+              widths={[360, 478]}
+              sizes="(min-width: 960px) 40vw, 100vw"
+              loading="lazy"
+              quality={76}
+            />
+          </div>
+          <h3 id="jac-title" class="h3">Jacuzzi privado</h3>
+          <p>
+            Pensado para una relajación exclusiva y totalmente privada. Sus luces internas crean un ambiente envolvente y
+            acogedor, acompañado de música relajante.
+          </p>
+          <dl class="specs">
+            <div><dt>Chorros</dt><dd>170, con luces internas</dd></div>
+            <div><dt>Agua</dt><dd>Se renueva para cada persona que reserva</dd></div>
+            <div><dt>Mantenimiento</dt><dd>Sin químicos</dd></div>
+          </dl>
+        </article>
+
+        <article class="item" data-reveal style="--delay:.1s" aria-labelledby="sau-title">
+          <div class="media item-media">
+            <Image
+              src={saunaOutside}
+              alt="Sauna de infracarbono vista desde la sala, con puertas de cristal y luz rosada en el interior"
+              widths={[360, 540, 682]}
+              sizes="(min-width: 960px) 40vw, 100vw"
+              loading="lazy"
+              quality={78}
+            />
+          </div>
+          <h3 id="sau-title" class="h3">Sauna de infracarbono</h3>
+          <p>
+            No es una sauna de vapor ni de infrarrojos convencional: combina diatermia profunda, bioluz, ionizante y
+            piedras de turmalina, con sonido relajante.
+          </p>
+          <dl class="specs">
+            <div><dt>Material</dt><dd>Bambú</dd></div>
+            <div><dt>Capacidad</dt><dd>Dos personas</dd></div>
+            <div><dt>Duración</dt><dd>Máximo 30 minutos</dd></div>
+          </dl>
+        </article>
+      </div>
+
+      <div class="tour">
+        <div class="media tour-photo" data-reveal>
+          <Image
+            src={saunaRoom}
+            alt="Sala de la sauna con mural de Buda, dos sillas y suelo claro bajo luz violeta"
+            widths={[360, 540, 710]}
+            sizes="(min-width: 960px) 45vw, 100vw"
+            loading="lazy"
+            quality={78}
+          />
+        </div>
+        <div class="tour-video" data-reveal style="--delay:.1s">
+          <VideoPlayer
+            src="/videos/video-sauna-infracarbono.mp4"
+            poster={heroImg}
+            label="Recorrido por la sauna de infracarbono"
+            duration="1:12"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ServiceSection
+    id="experiencias-spa"
+    eyebrow="Experiencias de spa"
+    title="Cómo disfrutarlo"
+    intro="El circuito puede reservarse como experiencia completa o combinarse con aromaterapia o exfoliación."
+    items={spa}
+    notice="El precio del masaje de aromaterapia con circuito es promocional: sus condiciones y vigencia se confirman al reservar."
+  />
+
+  <RelatedLinks
+    links={[
+      { href: '/parejas/', label: 'En pareja', text: 'Sauna para dos y rituales compartidos.' },
+      { href: '/promociones/', label: 'Rituales con sauna', text: 'Masaje, exfoliación o facial con sesión de sauna.' },
+      { href: '/vales-regalo/', label: 'Vales regalo', text: 'Regale una experiencia de spa privado.' },
+    ]}
+  />
+
+  <BookingSection title="Reserve el spa privado" subject="el spa privado" />
+</BaseLayout>
+
+<style>
+  .head {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .duo {
+    display: grid;
+    gap: clamp(3rem, 5vw, 4rem);
+  }
+
+  .item > * + * {
+    margin-top: 1.1rem;
+  }
+
+  .item-media {
+    aspect-ratio: 4 / 5;
+    background: var(--forest-800);
+  }
+
+  .item:first-child .item-media :global(img) {
+    object-position: 50% 62%;
+  }
+
+  .item h3 {
+    margin-top: 1.75rem;
+  }
+
+  .item p {
+    color: var(--on-dark-soft);
+    max-width: 34rem;
+  }
+
+  .specs {
+    margin: 1.5rem 0 0;
+    border-top: 1px solid var(--line-dark);
+    max-width: 34rem;
+  }
+
+  .specs div {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  .specs dt {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--sand-300);
+    padding-top: 0.2rem;
+  }
+
+  .specs dd {
+    margin: 0;
+  }
+
+  .tour {
+    display: grid;
+    gap: 2rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
+    align-items: end;
+  }
+
+  .tour-photo {
+    aspect-ratio: 4 / 3;
+  }
+
+  .tour-video {
+    width: min(100%, 300px);
+  }
+
+  @media (min-width: 960px) {
+    .duo {
+      grid-template-columns: 1fr 1fr;
+    }
+    .duo .item:last-child {
+      margin-top: 6rem;
+    }
+    .tour {
+      grid-template-columns: 1fr auto;
+      gap: 4rem;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .specs div {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+  }
+</style>

@@ -1,0 +1,55 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import ServiceSection from '@/components/ServiceSection.astro';
+import RelatedLinks from '@/components/RelatedLinks.astro';
+import BookingSection from '@/components/BookingSection.astro';
+import { massages, signatureRituals } from '@/data/services';
+import heroImg from '@/assets/images/experiencias/aceite-aromatico-manos.png';
+import headMassage from '@/assets/images/experiencias/masaje-cabeza-toalla-verde.png';
+---
+
+<BaseLayout
+  title="Masajes en Palma de Mallorca | Tu Belleza Holística"
+  description="Masaje terapéutico con ondas vibracionales, drenaje linfático postoperatorio, masaje Kobido y masaje con exfoliación en un centro privado de Palma. Precios y duración."
+  ogImage={heroImg}
+>
+  <PageHero
+    eyebrow="Masajes y bienestar"
+    title="Masajes para soltar"
+    accent="lo que pesa"
+    intro="Relajantes, terapéuticos, de drenaje o faciales. Cada masaje se adapta a lo que necesita ese día, en un espacio que se reserva solo para usted."
+    image={heroImg}
+    alt="Terapeuta vertiendo aceite aromático en la palma de la mano sobre una toalla verde"
+    position="50% 40%"
+  />
+
+  <ServiceSection
+    id="masajes"
+    eyebrow="La carta"
+    title="Cuatro masajes, cuatro intenciones"
+    intro="Duración y precio de cada sesión, para comparar de un vistazo."
+    items={massages}
+    image={headMassage}
+    alt="Masaje de cabeza y rostro a una clienta tumbada sobre una toalla verde"
+  />
+
+  <ServiceSection
+    id="rituales-de-autor"
+    eyebrow="Rituales de autor"
+    title="Masajes sensoriales"
+    intro="Dos rituales multisensoriales del centro. Consulte precio y duración al reservar."
+    items={signatureRituals}
+    tone="ivory"
+  />
+
+  <RelatedLinks
+    links={[
+      { href: '/spa-privado/', label: 'Spa privado', text: 'Masaje de aromaterapia con jacuzzi y sauna.' },
+      { href: '/promociones/', label: 'Rituales y promociones', text: 'Masaje combinado con exfoliación, sauna o facial.' },
+      { href: '/parejas/', label: 'En pareja', text: 'El mismo cuidado, para dos personas.' },
+    ]}
+  />
+
+  <BookingSection title="Reserve su masaje" subject="un masaje" />
+</BaseLayout>

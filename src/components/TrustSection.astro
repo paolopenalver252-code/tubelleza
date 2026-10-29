@@ -1,0 +1,212 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { reviews, seleniQuotes } from '@/data/reviews';
+import { site } from '@/data/site';
+import candle from '@/assets/images/ambiente/vela-piedras-madera.png';
+
+const [featured, ...rest] = reviews;
+const shortList = rest.slice(0, 4);
+---
+
+<section class="trust section bg-sand" aria-labelledby="trust-title">
+  <div class="wrap">
+    <div class="who">
+      <div class="media arch who-media" data-reveal>
+        <Image
+          src={candle}
+          alt="Vela encendida, piedras volcánicas y una toalla enrollada sobre una mesa de madera en la cabina"
+          widths={[360, 540, 720]}
+          sizes="(min-width: 960px) 26vw, 70vw"
+          loading="lazy"
+          quality={74}
+        />
+      </div>
+      <div class="who-copy" data-reveal style="--delay:.1s">
+        <p class="eyebrow">Quién le atiende</p>
+        <h2 id="trust-title" class="h2">Un trato cercano, <em>con nombre propio</em></h2>
+        <p class="lead">
+          Seleni está al frente de Tu Belleza Holística. Quienes la visitan coinciden en tres cosas: profesionalidad,
+          buenas manos y un trato cercano.
+        </p>
+        <ul class="voices">
+          {
+            seleniQuotes.map((q) => (
+              <li>
+                <blockquote>
+                  <p>«{q.text}»</p>
+                </blockquote>
+                <span>— {q.author}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="reviews" aria-label="Reseñas de clientes">
+      <figure class="featured" data-reveal>
+        <span class="stars" role="img" aria-label="5 de 5 estrellas">★★★★★</span>
+        <blockquote>
+          <p>{featured.text}</p>
+        </blockquote>
+        <figcaption>— {featured.author}</figcaption>
+      </figure>
+      <ul class="list">
+        {
+          shortList.map((r, i) => (
+            <li data-reveal style={`--delay:${i * 0.06}s`}>
+              <figure>
+                <span class="stars" role="img" aria-label="5 de 5 estrellas">★★★★★</span>
+                <blockquote>
+                  <p>{r.text}</p>
+                </blockquote>
+                <figcaption>— {r.author}</figcaption>
+              </figure>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="source">
+      <p class="small muted">
+        Reseñas publicadas en la web del centro, reproducidas tal como se escribieron.
+      </p>
+      <a class="link-arrow" href={site.googleReviewsUrl} target="_blank" rel="noopener">
+        Ver todas las reseñas en Google <Icon name="arrow-up-right" />
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .who {
+    display: grid;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+  }
+
+  .who-media {
+    aspect-ratio: 4 / 5;
+    width: min(100%, 22rem);
+  }
+
+  .who-copy > * + * {
+    margin-top: 1.3rem;
+  }
+
+  .who-copy {
+    max-width: 40rem;
+  }
+
+  .voices {
+    list-style: none;
+    display: grid;
+    gap: 1.1rem;
+    margin-top: 2rem !important;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .voices blockquote {
+    margin: 0;
+  }
+
+  .voices p {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: 340;
+    line-height: 1.35;
+  }
+
+  .voices span {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ink-mute);
+  }
+
+  .reviews {
+    display: grid;
+    gap: clamp(2rem, 4vw, 4rem);
+    margin-top: clamp(3.5rem, 7vw, 6rem);
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+    border-top: 1px solid var(--line-strong);
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  blockquote {
+    margin: 0.75rem 0 0;
+  }
+
+  .stars {
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: var(--clay-500);
+  }
+
+  .featured blockquote p {
+    font-family: var(--font-serif);
+    font-size: clamp(1.4rem, 1.15rem + 1.1vw, 2.1rem);
+    font-weight: 340;
+    line-height: 1.28;
+    letter-spacing: -0.01em;
+  }
+
+  figcaption {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .list {
+    list-style: none;
+    display: grid;
+    border-top: 1px solid var(--line);
+  }
+
+  .list li {
+    padding-block: 1.4rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .list blockquote p {
+    color: var(--ink-soft);
+  }
+
+  .source {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (min-width: 960px) {
+    .who {
+      grid-template-columns: auto 1fr;
+    }
+    .who-media {
+      width: clamp(18rem, 26vw, 24rem);
+    }
+    .reviews {
+      grid-template-columns: 1.1fr 1fr;
+      align-items: start;
+    }
+    .list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 2.5rem;
+      border-top: 0;
+    }
+    .list li:nth-child(-n + 2) {
+      padding-top: 0;
+    }
+  }
+</style>

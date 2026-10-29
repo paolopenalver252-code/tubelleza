@@ -1,0 +1,282 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import Reviews from '@/components/Reviews.astro';
+import VideoPlayer from '@/components/VideoPlayer.astro';
+import BookingSection from '@/components/BookingSection.astro';
+import heroImg from '@/assets/images/ambiente/clienta-cabina-vegetal.png';
+import candle from '@/assets/images/ambiente/vela-piedras-madera.png';
+import steam from '@/assets/images/ambiente/perfil-vapor-luz-calida.png';
+import videoPoster from '@/assets/images/centro/poster-video-espacio.png';
+import g1 from '@/assets/images/centro/cabina-principal-panoramica.jpg';
+import g2 from '@/assets/images/centro/cabina-camillas-verde.jpg';
+import g3 from '@/assets/images/centro/sauna-infracarbono-exterior.jpg';
+import g4 from '@/assets/images/centro/pasillo-sala-sauna.jpg';
+import g5 from '@/assets/images/centro/cabina-vista-general.jpg';
+import g6 from '@/assets/images/centro/camilla-tratamiento.jpg';
+import g7 from '@/assets/images/centro/cabina-luz-violeta.jpg';
+
+const gallery = [
+  { src: g1, alt: 'Cabina principal con camilla, estanterías blancas, cortinas verdes y guirnaldas de flores', cls: 'wide' },
+  { src: g2, alt: 'Cabina con camilla vestida en verde, plantas y cuadros en la pared', cls: 'tall' },
+  { src: g3, alt: 'Sala de la sauna de infracarbono con puertas de cristal', cls: '' },
+  { src: g4, alt: 'Pasillo hacia la sala de la sauna, con plantas colgantes y cortinas estampadas', cls: 'tall' },
+  { src: g5, alt: 'Vista general de la cabina principal bajo luz ambiental de colores', cls: 'wide' },
+  { src: g6, alt: 'Camilla preparada con toallas en la cabina principal', cls: 'tall' },
+  { src: g7, alt: 'Cabina con cortinas de terciopelo y luz violeta', cls: 'tall' },
+];
+---
+
+<BaseLayout
+  title="El centro: bienestar privado en Palma de Mallorca | Tu Belleza Holística"
+  description="Conozca Tu Belleza Holística: un espacio de bienestar y spa privado en Llevant, Palma, con tratamientos personalizados, productos naturales y tecnología no invasiva."
+  ogImage={heroImg}
+>
+  <PageHero
+    eyebrow="El centro"
+    title="Un espacio para"
+    accent="sanar y renacer"
+    intro="Un refugio en Palma de Mallorca donde el bienestar se vive desde la privacidad y la atención cercana."
+    image={heroImg}
+    alt="Clienta relajada en la cabina del centro, rodeada de plantas colgantes y luz cálida"
+    position="75% 45%"
+  />
+
+  <!-- Historia -->
+  <section class="section" aria-labelledby="story-title">
+    <div class="wrap story">
+      <div class="story-copy" data-reveal>
+        <p class="eyebrow">Nuestra historia</p>
+        <h2 id="story-title" class="h2">Un lugar diferente, <em>cuidado al detalle</em></h2>
+        <p class="lead">
+          Tu Belleza Holística nace para ofrecer en Palma un espacio donde el bienestar se vive en privado. Creado como
+          un refugio exclusivo, combina experiencias de spa, tratamientos estéticos y técnicas holísticas en un entorno
+          pensado para desconectar del ritmo diario.
+        </p>
+        <p class="muted">
+          Desde sus inicios, el centro se ha enfocado en cuidar cada detalle para que usted pueda relajarse, sentirse
+          atendido de forma cercana y disfrutar de un momento dedicado solo a su bienestar.
+        </p>
+      </div>
+      <div class="media story-media" data-reveal style="--delay:.1s">
+        <Image
+          src={candle}
+          alt="Vela encendida, piedras volcánicas y una toalla enrollada sobre una mesa de madera en la cabina"
+          widths={[480, 720, 1080]}
+          sizes="(min-width: 960px) 40vw, 100vw"
+          loading="lazy"
+          quality={72}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Filosofía -->
+  <section class="philosophy section bg-forest" aria-labelledby="phil-title">
+    <div class="wrap phil">
+      <div class="media phil-media" data-reveal>
+        <Image
+          src={steam}
+          alt="Perfil de una mujer con los ojos cerrados envuelta en vapor y luz cálida"
+          widths={[480, 720, 1080]}
+          sizes="(min-width: 960px) 36vw, 100vw"
+          loading="lazy"
+          quality={72}
+        />
+      </div>
+      <div class="phil-copy" data-reveal style="--delay:.1s">
+        <p class="eyebrow">Filosofía</p>
+        <h2 id="phil-title" class="h2">Cuidado consciente, <em>cuerpo y mente en equilibrio</em></h2>
+        <p class="lead">
+          Tratamientos personalizados, productos naturales y tecnología no invasiva, en un entorno silencioso, íntimo y
+          acogedor que favorece la desconexión.
+        </p>
+        <dl class="mv">
+          <div>
+            <dt>Misión</dt>
+            <dd>
+              Ofrecer experiencias de bienestar privadas y personalizadas que ayuden a desconectar del estrés diario,
+              cuidando cuerpo y mente con tratamientos naturales y tecnología no invasiva.
+            </dd>
+          </div>
+          <div>
+            <dt>Visión</dt>
+            <dd>
+              Ser un referente de bienestar y spa privado en Palma de Mallorca por la calidad de sus servicios, la
+              exclusividad de la experiencia y el cuidado integral de cada cliente.
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galería real -->
+  <section class="section bg-ivory" aria-labelledby="gallery-title">
+    <div class="wrap">
+      <div class="gallery-head" data-reveal>
+        <div>
+          <p class="eyebrow">Dentro del centro</p>
+          <h2 id="gallery-title" class="h2">Así es <em>el espacio</em></h2>
+        </div>
+        <p class="muted">
+          Fotografías reales de las cabinas y de la sala de la sauna, con su iluminación ambiental.
+        </p>
+      </div>
+      <ul class="gallery">
+        {
+          gallery.map((g) => (
+            <li class={g.cls} data-reveal>
+              <div class="media">
+                <Image
+                  src={g.src}
+                  alt={g.alt}
+                  widths={[360, 640, 960]}
+                  sizes="(min-width: 960px) 33vw, (min-width: 600px) 50vw, 100vw"
+                  loading="lazy"
+                  quality={72}
+                />
+              </div>
+            </li>
+          ))
+        }
+        <li class="tall video-cell" data-reveal>
+          <VideoPlayer
+            src="/videos/video-espacio-desconectar.mp4"
+            poster={videoPoster}
+            label="Recorrido por el espacio de Tu Belleza Holística"
+            duration="0:33"
+          />
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <Reviews />
+
+  <BookingSection title="Visítenos en Palma" />
+</BaseLayout>
+
+<style>
+  .story,
+  .phil {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: center;
+  }
+
+  .story-copy > * + *,
+  .phil-copy > * + * {
+    margin-top: 1.3rem;
+  }
+
+  .story-copy {
+    max-width: 40rem;
+  }
+
+  .story-media,
+  .phil-media {
+    aspect-ratio: 1;
+  }
+
+  .mv {
+    margin: 2rem 0 0 !important;
+    border-top: 1px solid var(--line-dark);
+  }
+
+  .mv div {
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  .mv dt {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sand-300);
+  }
+
+  .mv dd {
+    margin: 0.4rem 0 0;
+    color: var(--on-dark-soft);
+  }
+
+  .gallery-head {
+    display: grid;
+    gap: 1.25rem;
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .gallery-head > div > * + * {
+    margin-top: 1rem;
+  }
+
+  .gallery-head p.muted {
+    max-width: 30rem;
+  }
+
+  .gallery {
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-flow: dense;
+  }
+
+  .gallery .media {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+
+  .gallery .tall .media {
+    aspect-ratio: 4 / 5;
+  }
+
+  .video-cell {
+    max-width: 22rem;
+  }
+
+  @media (min-width: 600px) {
+    .gallery {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .gallery .wide {
+      grid-column: span 2;
+    }
+    .gallery .wide .media {
+      aspect-ratio: 16 / 9;
+    }
+    .video-cell {
+      max-width: none;
+    }
+  }
+
+  @media (min-width: 960px) {
+    .story {
+      grid-template-columns: 6fr 5fr;
+    }
+    .phil {
+      grid-template-columns: 5fr 6fr;
+    }
+    .gallery-head {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+    .gallery {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-auto-flow: dense;
+    }
+    .gallery .tall {
+      grid-row: span 2;
+    }
+    .gallery .tall .media {
+      aspect-ratio: auto;
+      height: 100%;
+    }
+    .gallery .wide .media {
+      aspect-ratio: 16 / 9;
+    }
+  }
+</style>

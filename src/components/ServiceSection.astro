@@ -1,0 +1,112 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import TreatmentList from './TreatmentList.astro';
+import type { Treatment } from '@/data/services';
+
+interface Props {
+  id: string;
+  eyebrow?: string;
+  title: string;
+  intro?: string;
+  items: Treatment[];
+  image?: ImageMetadata;
+  alt?: string;
+  caption?: string;
+  /** Aviso visible encima de la lista (p. ej., precios promocionales). */
+  notice?: string;
+  tone?: 'paper' | 'ivory' | 'sand';
+}
+
+const { id, eyebrow, title, intro, items, image, alt = '', caption, notice, tone = 'paper' } = Astro.props;
+---
+
+<section class:list={['service section', `tone-${tone}`, { 'no-image': !image }]} id={id} aria-labelledby={`${id}-title`}>
+  <div class="wrap grid">
+    <div class="aside" data-reveal>
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h2 id={`${id}-title`} class="h2">{title}</h2>
+      {intro && <p class="lead">{intro}</p>}
+      {
+        image && (
+          <figure class="figure">
+            <div class="media arch">
+              <Image
+                src={image}
+                alt={alt}
+                widths={[360, 540, 720, 960]}
+                sizes="(min-width: 960px) 34vw, 100vw"
+                loading="lazy"
+                quality={72}
+              />
+            </div>
+            {caption && <figcaption class="caption">{caption}</figcaption>}
+          </figure>
+        )
+      }
+      <slot name="aside" />
+    </div>
+    <div class="list" data-reveal style="--delay:.08s">
+      {notice && <p class="notice">{notice}</p>}
+      <TreatmentList items={items} />
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .tone-ivory {
+    background: var(--ivory);
+  }
+  .tone-sand {
+    background: var(--sand-100);
+  }
+
+  .grid {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 5rem);
+  }
+
+  .aside > * + * {
+    margin-top: 1.25rem;
+  }
+
+  .figure {
+    margin: 2rem 0 0;
+  }
+
+  .figure .media {
+    aspect-ratio: 4 / 5;
+    max-width: 24rem;
+  }
+
+  .notice {
+    margin-bottom: 1.25rem;
+    padding: 0.85rem 1rem;
+    border-left: 2px solid var(--clay-500);
+    background: rgb(176 108 67 / 0.07);
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+
+  @media (min-width: 960px) {
+    .grid {
+      grid-template-columns: 4fr 7fr;
+      align-items: start;
+    }
+    .aside {
+      position: sticky;
+      top: calc(var(--header-h) + 2rem);
+    }
+    .no-image .grid {
+      grid-template-columns: 4fr 7fr;
+    }
+  }
+
+  @media (max-width: 959px) {
+    .figure .media {
+      aspect-ratio: 4 / 5;
+      max-width: 15rem;
+    }
+  }
+</style>

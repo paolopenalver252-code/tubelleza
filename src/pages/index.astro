@@ -1,0 +1,643 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import HomeHero from '@/components/HomeHero.astro';
+import TreatmentList from '@/components/TreatmentList.astro';
+import VideoPlayer from '@/components/VideoPlayer.astro';
+import TrustSection from '@/components/TrustSection.astro';
+import Commitments from '@/components/Commitments.astro';
+import GiftBand from '@/components/GiftBand.astro';
+import BookingSection from '@/components/BookingSection.astro';
+import Icon from '@/components/Icon.astro';
+import { couples } from '@/data/services';
+import { businessJsonLd } from '@/data/seo';
+
+import clientRoom from '@/assets/images/ambiente/clienta-cabina-vegetal.png';
+import mainCabin from '@/assets/images/centro/cabina-principal-panoramica.jpg';
+import saunaInside from '@/assets/images/centro/sauna-infracarbono-interior.jpg';
+import jacuzzi from '@/assets/images/centro/jacuzzi-privado.png';
+import videoPoster from '@/assets/images/centro/poster-video-espacio.png';
+import couplesImg from '@/assets/images/experiencias/conexion-profunda-pareja.png';
+import oilImg from '@/assets/images/experiencias/aceite-aromatico-manos.png';
+import deviceRoom from '@/assets/images/centro/cabina-aparatologia.jpg';
+import promoImg from '@/assets/images/experiencias/masaje-espalda-luz-calida.png';
+import twoBeds from '@/assets/images/centro/sala-camillas-cielo-estrellado.jpg';
+
+const experiences = [
+  {
+    href: '/spa-privado/',
+    title: 'Spa privado',
+    text: 'Jacuzzi, sauna de infracarbono y rituales de aromaterapia en un circuito solo para usted.',
+    meta: 'Desde 80 €',
+    image: saunaInside,
+    alt: 'Interior de la sauna de infracarbono del centro, de madera y con luz rosada',
+    size: 'lg',
+  },
+  {
+    href: '/parejas/',
+    title: 'En pareja',
+    text: 'Masajes y rituales para dos, con la misma intimidad que una sesión individual.',
+    meta: '6 experiencias',
+    image: couplesImg,
+    alt: 'Pareja relajada recibiendo un masaje en camillas contiguas',
+    size: 'md',
+  },
+  {
+    href: '/masajes/',
+    title: 'Masajes',
+    text: 'Relajantes, terapéuticos, drenaje linfático y masaje facial Kobido.',
+    meta: 'Desde 40 €',
+    image: oilImg,
+    alt: 'Terapeuta vertiendo aceite aromático en la mano antes de un masaje',
+    size: 'sm',
+  },
+  {
+    href: '/aparatologia/',
+    title: 'Aparatología estética',
+    text: 'Tecnología no invasiva para rostro y cuerpo: radiofrecuencia, presoterapia, fototerapia y más.',
+    meta: 'Desde 38 €',
+    image: deviceRoom,
+    alt: 'Cabina del centro con camillas y equipos de aparatología estética',
+    size: 'sm',
+  },
+  {
+    href: '/promociones/',
+    title: 'Rituales y promociones',
+    text: 'Combinaciones de masaje, exfoliación, sauna y facial a precio de promoción.',
+    meta: 'Consultar vigencia',
+    image: promoImg,
+    alt: 'Masaje de espalda con aceite bajo una luz cálida y tenue',
+    size: 'sm',
+  },
+];
+
+const pillars = [
+  {
+    title: 'Privacidad total',
+    text: 'El centro se cierra en exclusiva durante su cita. Nadie más comparte el espacio.',
+  },
+  {
+    title: 'A su medida',
+    text: 'Cada sesión se adapta a usted, combinando productos naturales con aparatología no invasiva.',
+  },
+  {
+    title: 'Desconexión real',
+    text: 'Un ambiente silencioso, con música suave y aromas, pensado para dejar fuera el ritmo del día.',
+  },
+];
+
+const couplesSelection = couples.slice(0, 3);
+---
+
+<BaseLayout
+  title="Tu Belleza Holística | Spa privado y masajes en Palma de Mallorca"
+  description="Centro de bienestar y spa privado en Palma: masajes, rituales en pareja, jacuzzi, sauna de infracarbono y aparatología estética no invasiva. Reserva por WhatsApp."
+  jsonLd={businessJsonLd}
+>
+  <HomeHero />
+
+  <Commitments />
+
+  <!-- Presentación del centro -->
+  <section class="intro section" aria-labelledby="intro-title">
+    <div class="wrap intro-grid">
+      <div class="intro-copy" data-reveal>
+        <p class="eyebrow">Un santuario privado</p>
+        <h2 id="intro-title" class="h2">Aquí no comparte sala, ni horario, <em>ni silencio.</em></h2>
+        <p class="lead">
+          Tu Belleza Holística es un centro de bienestar y spa en Palma de Mallorca pensado para vivirse en privado.
+          Mientras dura su cita, el espacio es solo suyo: tratamientos holísticos, masajes y estética natural en un
+          entorno de calma.
+        </p>
+        <ol class="pillars">
+          {
+            pillars.map((p, i) => (
+              <li>
+                <span class="pillar-num">0{i + 1}</span>
+                <div>
+                  <h3>{p.title}</h3>
+                  <p>{p.text}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+        <a class="link-arrow" href="/el-centro/">Conocer el centro <Icon name="arrow" /></a>
+      </div>
+
+      <div class="intro-media" data-reveal style="--delay:.12s">
+        <div class="media arch tall">
+          <Image
+            src={clientRoom}
+            alt="Clienta relajada con los ojos cerrados en la cabina, rodeada de plantas colgantes y luz cálida"
+            widths={[480, 720, 960, 1280]}
+            sizes="(min-width: 960px) 45vw, 100vw"
+            loading="lazy"
+            quality={72}
+            style="object-position: 72% 50%"
+          />
+        </div>
+        <figure class="inset">
+          <div class="media">
+            <Image
+              src={mainCabin}
+              alt="Cabina principal del centro con camilla, estanterías, cortinas verdes y guirnaldas de flores"
+              widths={[320, 480, 640]}
+              sizes="(min-width: 960px) 20vw, 50vw"
+              loading="lazy"
+              quality={72}
+            />
+          </div>
+          <figcaption class="caption">La cabina principal del centro.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experiencias por intención -->
+  <section class="experiences section bg-ivory" id="experiencias" aria-labelledby="exp-title">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Experiencias</p>
+        <h2 id="exp-title" class="h2">¿Qué necesita <em>hoy?</em></h2>
+        <p class="lead">Elija por intención: desconectar en el spa, compartir el momento o cuidar rostro y cuerpo.</p>
+      </div>
+
+      <ul class="exp-grid">
+        {
+          experiences.map((e, i) => (
+            <li class={`exp exp-${e.size}`} data-reveal style={`--delay:${(i % 3) * 0.08}s`}>
+              <a href={e.href}>
+                <div class="media exp-media">
+                  <Image
+                    src={e.image}
+                    alt={e.alt}
+                    widths={[400, 640, 960, 1280]}
+                    sizes={e.size === 'lg' ? '(min-width: 960px) 56vw, 100vw' : '(min-width: 960px) 33vw, 100vw'}
+                    loading="lazy"
+                    quality={70}
+                  />
+                </div>
+                <div class="exp-body">
+                  <div class="exp-title-row">
+                    <h3 class="h3">{e.title}</h3>
+                    <span class="exp-arrow" aria-hidden="true"><Icon name="arrow" size={18} /></span>
+                  </div>
+                  <p>{e.text}</p>
+                  <p class="exp-meta">{e.meta}</p>
+                </div>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- El espacio: jacuzzi y sauna -->
+  <section class="space section bg-deep" id="espacio" aria-labelledby="space-title">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">El espacio</p>
+        <h2 id="space-title" class="h2">Agua, calor <em>y silencio</em></h2>
+        <p class="lead">Dos instalaciones que se disfrutan en privado, solas o dentro de un ritual.</p>
+      </div>
+
+      <article class="facility" aria-labelledby="jacuzzi-title">
+        <div class="media facility-media portrait" data-reveal>
+          <Image
+            src={jacuzzi}
+            alt="Jacuzzi privado del centro junto a cortinas de terciopelo azul y suelo de madera"
+            widths={[360, 478]}
+            sizes="(min-width: 960px) 30vw, 80vw"
+            loading="lazy"
+            quality={76}
+          />
+        </div>
+        <div class="facility-copy" data-reveal style="--delay:.1s">
+          <p class="facility-label">01 · Jacuzzi privado</p>
+          <h3 id="jacuzzi-title" class="h3">Un jacuzzi solo para usted, con agua nueva en cada reserva</h3>
+          <p>
+            Una experiencia de relajación exclusiva y totalmente privada, con un ambiente envolvente que ayuda a
+            desconectar del exterior.
+          </p>
+          <ul class="facts">
+            <li>170 chorros y luces internas</li>
+            <li>El agua se renueva para cada persona que reserva</li>
+            <li>Sin químicos para su mantenimiento</li>
+            <li>Música relajante</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="facility reverse" aria-labelledby="sauna-title">
+        <div class="media facility-media landscape" data-reveal>
+          <Image
+            src={saunaInside}
+            alt="Interior de la sauna de infracarbono, con bancos de madera, paneles y luz rosada"
+            widths={[480, 800, 1100, 1360]}
+            sizes="(min-width: 960px) 50vw, 100vw"
+            loading="lazy"
+            quality={72}
+          />
+        </div>
+        <div class="facility-copy" data-reveal style="--delay:.1s">
+          <p class="facility-label">02 · Sauna de infracarbono</p>
+          <h3 id="sauna-title" class="h3">Calor profundo en una sauna de bambú para dos</h3>
+          <p>
+            No es una sauna de vapor ni de infrarrojos convencional: combina diatermia profunda, bioluz, ionizante y
+            piedras de turmalina, acompañada de sonido relajante.
+          </p>
+          <ul class="facts">
+            <li>Capacidad para dos personas</li>
+            <li>Duración máxima de 30 minutos</li>
+            <li>Dentro del circuito de spa o combinada con aromaterapia o exfoliación</li>
+          </ul>
+          <a class="link-arrow" href="/spa-privado/">Ver el spa privado <Icon name="arrow" /></a>
+        </div>
+      </article>
+
+      <div class="space-video">
+        <div class="space-video-copy" data-reveal>
+          <p class="facility-label">En movimiento</p>
+          <p class="h3">«Un espacio creado para desconectar del mundo»</p>
+          <p class="muted-dark">Un recorrido breve por el centro, tal como lo comparte en sus redes.</p>
+        </div>
+        <div class="space-video-player" data-reveal style="--delay:.1s">
+          <VideoPlayer
+            src="/videos/video-espacio-desconectar.mp4"
+            poster={videoPoster}
+            label="Recorrido por el espacio de Tu Belleza Holística"
+            duration="0:33"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Selección para dos -->
+  <section class="couples section" aria-labelledby="couples-title">
+    <div class="wrap couples-grid">
+      <div class="couples-aside" data-reveal>
+        <p class="eyebrow">Para dos</p>
+        <h2 id="couples-title" class="h2">Compartir el momento, <em>sin compartir el espacio</em></h2>
+        <p class="lead">Rituales pensados para disfrutar en pareja, con su madre, una amiga o quien usted elija.</p>
+        <div class="media arch couples-media">
+          <Image
+            src={twoBeds}
+            alt="Sala del centro con dos camillas, plantas y proyección de estrellas en el techo"
+            widths={[360, 540, 720]}
+            sizes="(min-width: 960px) 30vw, 100vw"
+            loading="lazy"
+            quality={72}
+          />
+        </div>
+      </div>
+      <div class="couples-list" data-reveal style="--delay:.1s">
+        <p class="price-note small">
+          Precios promocionales. Sus condiciones y vigencia se confirman al reservar.
+        </p>
+        <TreatmentList items={couplesSelection} />
+        <a class="btn btn-ghost" href="/parejas/">Ver todas las experiencias en pareja <Icon name="arrow" /></a>
+      </div>
+    </div>
+  </section>
+
+  <TrustSection />
+
+  <GiftBand />
+
+  <BookingSection />
+</BaseLayout>
+
+<style>
+  .section-head {
+    display: grid;
+    gap: 1.1rem;
+    max-width: 42rem;
+    margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  /* Presentación */
+  .intro-grid {
+    display: grid;
+    gap: clamp(3rem, 6vw, 6rem);
+  }
+
+  .intro-copy > * + * {
+    margin-top: 1.5rem;
+  }
+
+  .pillars {
+    list-style: none;
+    margin-top: 2.5rem !important;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .pillars li {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    padding-block: 1.25rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .pillar-num {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--clay-600);
+    padding-top: 0.3rem;
+  }
+
+  .pillars h3 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+  }
+
+  .pillars p {
+    margin-top: 0.3rem;
+    color: var(--ink-soft);
+  }
+
+  .intro-media {
+    position: relative;
+  }
+
+  .tall {
+    aspect-ratio: 4 / 5;
+  }
+
+  .inset {
+    width: 52%;
+    margin: -22% 0 0 auto;
+    position: relative;
+    padding: 0.6rem 0 0 0.6rem;
+    background: var(--paper);
+  }
+
+  .inset .media {
+    aspect-ratio: 4 / 3;
+  }
+
+  @media (min-width: 960px) {
+    .intro-grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+    .inset {
+      width: 48%;
+      margin: -26% -1.5rem 0 auto;
+    }
+  }
+
+  /* Experiencias */
+  .exp-grid {
+    list-style: none;
+    display: grid;
+    gap: clamp(2rem, 3vw, 2.5rem) clamp(1.25rem, 2.2vw, 2rem);
+  }
+
+  .exp a {
+    display: block;
+    text-decoration: none;
+  }
+
+  .exp-media {
+    aspect-ratio: 4 / 3;
+  }
+
+  .exp-media :global(img) {
+    transition: transform 1.2s var(--ease);
+  }
+
+  .exp a:hover .exp-media :global(img) {
+    transform: scale(1.04);
+  }
+
+  .exp-body {
+    padding-top: 1.1rem;
+  }
+
+  .exp-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .exp-arrow {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    transition:
+      background-color 0.3s var(--ease),
+      color 0.3s var(--ease);
+  }
+
+  .exp a:hover .exp-arrow,
+  .exp a:focus-visible .exp-arrow {
+    background: var(--olive-700);
+    color: var(--on-dark);
+  }
+
+  .exp-body p {
+    margin-top: 0.5rem;
+    color: var(--ink-soft);
+    max-width: 34rem;
+  }
+
+  .exp-body .exp-meta {
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--clay-600);
+  }
+
+  @media (min-width: 700px) {
+    .exp-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .exp-lg {
+      grid-column: 1 / -1;
+    }
+    .exp-lg .exp-media {
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .exp-grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+    .exp-lg {
+      grid-column: span 7;
+    }
+    .exp-md {
+      grid-column: span 5;
+    }
+    .exp-sm {
+      grid-column: span 4;
+    }
+    .exp-lg .exp-media,
+    .exp-md .exp-media {
+      aspect-ratio: auto;
+      height: clamp(380px, 36vw, 520px);
+    }
+    .exp-sm .exp-media {
+      aspect-ratio: 5 / 4;
+    }
+  }
+
+  /* El espacio */
+  .facility {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+    padding-block: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .facility + .facility {
+    border-top: 1px solid var(--line-dark);
+  }
+
+  .facility-media {
+    background: var(--forest-800);
+  }
+
+  .portrait {
+    aspect-ratio: 4 / 5;
+    max-width: 30rem;
+  }
+
+  .portrait :global(img) {
+    object-position: 50% 62%;
+  }
+
+  .landscape {
+    aspect-ratio: 4 / 3;
+  }
+
+  .facility-copy > * + * {
+    margin-top: 1.1rem;
+  }
+
+  .facility-copy p:not(.facility-label) {
+    color: var(--on-dark-soft);
+    max-width: 34rem;
+  }
+
+  .facility-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sand-300);
+  }
+
+  .facts {
+    list-style: none;
+    border-top: 1px solid var(--line-dark);
+    max-width: 34rem;
+  }
+
+  .facts li {
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--line-dark);
+    font-size: 0.95rem;
+  }
+
+  .space-video {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+    margin-top: clamp(2rem, 5vw, 4rem);
+    padding-top: clamp(2rem, 5vw, 4rem);
+    border-top: 1px solid var(--line-dark);
+  }
+
+  .space-video-copy > * + * {
+    margin-top: 1rem;
+  }
+
+  .muted-dark {
+    color: var(--on-dark-soft);
+  }
+
+  .space-video-player {
+    width: min(100%, 300px);
+  }
+
+  @media (min-width: 960px) {
+    .facility {
+      grid-template-columns: 5fr 6fr;
+      gap: clamp(3rem, 6vw, 6rem);
+    }
+    .facility.reverse {
+      grid-template-columns: 6fr 5fr;
+    }
+    .facility.reverse .facility-media {
+      order: 2;
+    }
+    .portrait {
+      justify-self: end;
+      width: 100%;
+    }
+    .space-video {
+      grid-template-columns: 1fr auto;
+      gap: 4rem;
+    }
+    .space-video-copy {
+      max-width: 30rem;
+      justify-self: end;
+      text-align: right;
+    }
+  }
+
+  /* Parejas */
+  .couples-grid {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 5rem);
+  }
+
+  .couples-aside > * + * {
+    margin-top: 1.3rem;
+  }
+
+  .couples-media {
+    aspect-ratio: 3 / 4;
+    max-width: 26rem;
+    margin-top: 2rem !important;
+  }
+
+  .price-note {
+    margin-bottom: 1.25rem;
+    color: var(--ink-mute);
+  }
+
+  .couples-list .btn {
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 960px) {
+    .couples-grid {
+      grid-template-columns: 5fr 7fr;
+      align-items: start;
+    }
+    .couples-aside {
+      position: sticky;
+      top: calc(var(--header-h) + 2rem);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .couples-list .btn {
+      width: 100%;
+    }
+  }
+</style>

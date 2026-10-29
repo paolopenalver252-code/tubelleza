@@ -1,0 +1,97 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import ServiceSection from '@/components/ServiceSection.astro';
+import RelatedLinks from '@/components/RelatedLinks.astro';
+import BookingSection from '@/components/BookingSection.astro';
+import { couples, coupleReferral } from '@/data/services';
+import heroImg from '@/assets/images/experiencias/conexion-profunda-pareja.png';
+import twoBeds from '@/assets/images/centro/sala-camillas-cielo-estrellado.jpg';
+import referralImg from '@/assets/images/experiencias/ritual-pareja-beneficio.png';
+---
+
+<BaseLayout
+  title="Masajes y spa en pareja en Palma | Tu Belleza Holística"
+  description="Masaje de aromaterapia en pareja con jacuzzi, rituales para dos con sauna de infracarbono y bioluz en un centro privado de Palma de Mallorca. Precios y duración."
+  ogImage={heroImg}
+>
+  <PageHero
+    eyebrow="Experiencias en pareja"
+    title="Un santuario"
+    accent="para dos"
+    intro="Rituales para compartir con su pareja, un familiar o una amiga, en un espacio que se cierra solo para ustedes."
+    image={heroImg}
+    alt="Pareja relajada en camillas contiguas recibiendo un masaje con luz cálida"
+    position="50% 45%"
+  />
+
+  <ServiceSection
+    id="rituales-pareja"
+    eyebrow="Rituales para dos"
+    title="Elijan su ritual"
+    intro="Masaje, drenaje, aparatología, bioluz, sauna o jacuzzi: cada experiencia combina técnicas distintas."
+    items={couples}
+    image={twoBeds}
+    alt="Sala del centro con dos camillas, plantas y proyección de estrellas en el techo"
+    caption="Sala de dos camillas del centro."
+    notice="Precios promocionales. Sus condiciones, vigencia y si el precio es por persona o por pareja se confirman al reservar."
+  />
+
+  <section class="referral section-tight bg-sand" aria-labelledby="ref-title">
+    <div class="wrap ref-grid">
+      <div class="media ref-media" data-reveal>
+        <Image
+          src={referralImg}
+          alt="Mujer recibiendo un masaje de espalda con su pareja en la camilla de al lado"
+          widths={[360, 540, 720]}
+          sizes="(min-width: 900px) 30vw, 100vw"
+          loading="lazy"
+          quality={70}
+        />
+      </div>
+      <div class="ref-copy" data-reveal style="--delay:.1s">
+        <p class="eyebrow">Ritual en pareja + beneficio</p>
+        <h2 id="ref-title" class="h2">Recomiende y <em>vuelva con ventaja</em></h2>
+        <p class="lead">{coupleReferral}</p>
+      </div>
+    </div>
+  </section>
+
+  <RelatedLinks
+    links={[
+      { href: '/spa-privado/', label: 'Spa privado', text: 'Jacuzzi y sauna de infracarbono para dos.' },
+      { href: '/vales-regalo/', label: 'Vales regalo', text: 'Una experiencia para regalar en pareja.' },
+      { href: '/promociones/', label: 'Rituales individuales', text: 'Masajes y rituales para una persona.' },
+    ]}
+  />
+
+  <BookingSection title="Reserve para dos" subject="una experiencia en pareja" />
+</BaseLayout>
+
+<style>
+  .ref-grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .ref-media {
+    aspect-ratio: 4 / 3;
+  }
+
+  .ref-copy > * + * {
+    margin-top: 1.25rem;
+  }
+
+  .ref-copy {
+    max-width: 36rem;
+  }
+
+  @media (min-width: 900px) {
+    .ref-grid {
+      grid-template-columns: 5fr 6fr;
+      gap: 5rem;
+    }
+  }
+</style>

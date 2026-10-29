@@ -1,0 +1,129 @@
+---
+import Icon from './Icon.astro';
+import { reviews } from '@/data/reviews';
+import { site } from '@/data/site';
+
+const [featured, ...rest] = reviews;
+---
+
+<section class="reviews section" aria-labelledby="reviews-title">
+  <div class="wrap">
+    <div class="head" data-reveal>
+      <p class="eyebrow">Opiniones</p>
+      <h2 id="reviews-title" class="h2">Lo que cuentan <em>quienes ya han venido</em></h2>
+      <p class="source muted small">
+        Selección de reseñas publicadas en la web del centro, todas con cinco estrellas. Las citas se reproducen
+        tal como se escribieron.
+      </p>
+    </div>
+
+    <div class="layout">
+      <figure class="featured" data-reveal>
+        <span class="stars" role="img" aria-label="5 de 5 estrellas">★★★★★</span>
+        <blockquote>
+          <p>{featured.text}</p>
+        </blockquote>
+        <figcaption>— {featured.author}</figcaption>
+      </figure>
+
+      <ul class="list">
+        {
+          rest.map((r, i) => (
+            <li data-reveal style={`--delay:${i * 0.06}s`}>
+              <figure>
+                <span class="stars" role="img" aria-label="5 de 5 estrellas">★★★★★</span>
+                <blockquote>
+                  <p>{r.text}</p>
+                </blockquote>
+                <figcaption>— {r.author}</figcaption>
+              </figure>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <a class="link-arrow more" href={site.googleReviewsUrl} target="_blank" rel="noopener">
+      Ver todas las reseñas en Google <Icon name="arrow-up-right" />
+    </a>
+  </div>
+</section>
+
+<style>
+  .head {
+    display: grid;
+    gap: 1.1rem;
+    max-width: 44rem;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .source {
+    max-width: 34rem;
+  }
+
+  .layout {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 5rem);
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  blockquote {
+    margin: 0.75rem 0 0;
+  }
+
+  .stars {
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: var(--clay-500);
+  }
+
+  .featured blockquote p {
+    font-family: var(--font-serif);
+    font-size: clamp(1.55rem, 1.2rem + 1.4vw, 2.35rem);
+    line-height: 1.22;
+  }
+
+  figcaption {
+    margin-top: 1.1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .list {
+    list-style: none;
+    display: grid;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .list li {
+    padding-block: 1.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .list blockquote p {
+    color: var(--ink-soft);
+  }
+
+  .more {
+    margin-top: 2.5rem;
+  }
+
+  @media (min-width: 960px) {
+    .layout {
+      grid-template-columns: 1.15fr 1fr;
+      align-items: start;
+    }
+    .featured {
+      position: sticky;
+      top: calc(var(--header-h) + 2rem);
+      padding-right: 2rem;
+    }
+    .list {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 2.5rem;
+    }
+  }
+</style>

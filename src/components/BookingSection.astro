@@ -1,0 +1,180 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { site, whatsappLink } from '@/data/site';
+import entrance from '@/assets/images/centro/entrada-fachada.jpg';
+
+interface Props {
+  title?: string;
+  /** Tratamiento que se añadirá al mensaje de WhatsApp. */
+  subject?: string;
+  headingLevel?: 'h1' | 'h2';
+}
+
+const { title = 'Reserve su momento', subject, headingLevel = 'h2' } = Astro.props;
+const Heading = headingLevel;
+---
+
+<section class="booking section bg-sand" id="reserva" aria-labelledby="reserva-title">
+  <div class="wrap grid">
+    <div class="copy" data-reveal>
+      <p class="eyebrow">Reserva y contacto</p>
+      <Heading id="reserva-title" class="h2">{title}</Heading>
+      <p class="lead">
+        Las citas se reservan directamente con el centro, por WhatsApp o por teléfono. No es una reserva
+        automática: cada cita se confirma personalmente.
+      </p>
+
+      <ol class="steps">
+        <li>
+          <span>1</span>
+          <p>Al pulsar el botón se abre WhatsApp con un mensaje ya escrito{subject ? ` sobre «${subject}»` : ''}.</p>
+        </li>
+        <li>
+          <span>2</span>
+          <p>Indique el tratamiento, si viene solo o en pareja y qué días le vienen mejor.</p>
+        </li>
+        <li>
+          <span>3</span>
+          <p>El centro le responde para confirmar la disponibilidad y la hora de su cita.</p>
+        </li>
+      </ol>
+
+      <div class="btn-row">
+        <a class="btn" href={whatsappLink(subject)} target="_blank" rel="noopener">
+          <Icon name="whatsapp" /> Reservar por WhatsApp
+        </a>
+        <a class="btn btn-ghost" href={site.phone.href}><Icon name="phone" /> {site.phone.display}</a>
+      </div>
+    </div>
+
+    <div class="visit" data-reveal style="--delay:.1s">
+      <div class="media photo">
+        <Image
+          src={entrance}
+          alt="Entrada del centro con el rótulo «Tu Belleza Holística · Con cita previa» rodeada de flores y plantas"
+          widths={[320, 480, 572]}
+          sizes="(min-width: 960px) 260px, 45vw"
+          loading="lazy"
+          quality={75}
+        />
+      </div>
+      <dl class="details">
+        <div>
+          <dt><Icon name="pin" size={18} /> Dirección</dt>
+          <dd>
+            {site.address.street}<br />{site.address.district}, {site.address.postalCode} {site.address.city}
+            <br /><a class="link-arrow" href={site.mapsUrl} target="_blank" rel="noopener">Cómo llegar <Icon name="arrow-up-right" /></a>
+          </dd>
+        </div>
+        <div>
+          <dt><Icon name="clock" size={18} /> Horario</dt>
+          <dd>{site.hours.label}<br />{site.hours.time} · {site.hours.note}</dd>
+        </div>
+        <div>
+          <dt><Icon name="mail" size={18} /> Correo</dt>
+          <dd><a href={`mailto:${site.email}`} class="email">{site.email}</a></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    gap: clamp(3rem, 6vw, 6rem);
+  }
+
+  .copy > * + * {
+    margin-top: 1.4rem;
+  }
+
+  .steps {
+    list-style: none;
+    display: grid;
+    gap: 0;
+    margin-top: 2rem;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .steps li {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 0.5rem;
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .steps span {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    line-height: 1.1;
+    color: var(--clay-600);
+  }
+
+  .steps p {
+    color: var(--ink-soft);
+  }
+
+  .btn-row {
+    margin-top: 2rem;
+  }
+
+  .visit {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+    align-items: start;
+  }
+
+  .photo {
+    aspect-ratio: 9 / 16;
+  }
+
+  .details {
+    display: grid;
+    gap: 1.6rem;
+    margin: 0;
+  }
+
+  dt {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--clay-600);
+  }
+
+  dd {
+    margin: 0.5rem 0 0;
+    line-height: 1.55;
+  }
+
+  dd .link-arrow {
+    margin-top: 0.6rem;
+  }
+
+  .email {
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 479px) {
+    .visit {
+      grid-template-columns: 1fr;
+    }
+    .photo {
+      aspect-ratio: 4 / 5;
+    }
+  }
+
+  @media (min-width: 960px) {
+    .grid {
+      grid-template-columns: 1.1fr 1fr;
+      align-items: center;
+    }
+  }
+</style>

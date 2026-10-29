@@ -1,0 +1,228 @@
+---
+import Icon from './Icon.astro';
+import { whatsappLink } from '@/data/site';
+import type { Treatment } from '@/data/services';
+
+interface Props {
+  items: Treatment[];
+  /** Número de inicio para la numeración editorial (01, 02…). */
+  start?: number;
+  dark?: boolean;
+}
+
+const { items, start = 1, dark = false } = Astro.props;
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<ol class:list={['treatments', { dark }]} start={start}>
+  {
+    items.map((t, i) => (
+      <li class="treatment">
+        <span class="num" aria-hidden="true">{pad(start + i)}</span>
+        <div class="body">
+          <h3 class="name">{t.name}</h3>
+          <p class="desc">{t.description}</p>
+          {t.includes && (
+            <ul class="includes" aria-label="Incluye">
+              {t.includes.map((inc) => <li>{inc}</li>)}
+            </ul>
+          )}
+          {t.note && <p class="note">{t.note}</p>}
+        </div>
+        <div class="meta">
+          <dl>
+            {t.duration && (
+              <div>
+                <dt>Duración</dt>
+                <dd>{t.duration.split(" · ").map((d) => <span class="opt">{d}</span>)}</dd>
+              </div>
+            )}
+            {t.price && (
+              <div>
+                <dt>Precio</dt>
+                <dd class="price">{t.price.split(" · ").map((p) => <span class="opt">{p}</span>)}</dd>
+              </div>
+            )}
+          </dl>
+          <a class="book" href={whatsappLink(t.name)} target="_blank" rel="noopener">
+            Reservar <span class="visually-hidden">{t.name} por WhatsApp</span>
+            <Icon name="arrow" size={16} />
+          </a>
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .treatments {
+    list-style: none;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .treatment {
+    display: grid;
+    grid-template-columns: 2.25rem 1fr;
+    gap: 0.25rem 1rem;
+    padding-block: 1.6rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .num {
+    padding-top: 0.45rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--clay-600);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .name {
+    font-family: var(--font-serif);
+    font-size: var(--step-2);
+    line-height: 1.12;
+  }
+
+  .desc {
+    margin-top: 0.5rem;
+    color: var(--ink-soft);
+    max-width: 38rem;
+  }
+
+  .includes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.9rem;
+    list-style: none;
+  }
+
+  .includes li {
+    padding: 0.25rem 0.7rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+
+  .note {
+    margin-top: 0.6rem;
+    font-size: var(--step--1);
+    color: var(--ink-mute);
+    font-style: italic;
+  }
+
+  .meta {
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem 1.5rem;
+    margin-top: 1rem;
+  }
+
+  dl {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.75rem;
+    margin: 0;
+  }
+
+  dt {
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  dd {
+    margin: 0.15rem 0 0;
+    font-weight: 500;
+  }
+
+  .opt {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .price {
+    font-weight: 600;
+    color: var(--forest-900);
+  }
+
+  .book {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.75rem;
+    padding: 0 1.1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background-color 0.25s var(--ease),
+      color 0.25s var(--ease),
+      border-color 0.25s var(--ease);
+  }
+
+  .book:hover {
+    background: var(--olive-700);
+    border-color: var(--olive-700);
+    color: var(--on-dark);
+  }
+
+  @media (min-width: 860px) {
+    .treatment {
+      grid-template-columns: 3rem minmax(0, 1fr) 17rem;
+      gap: 2rem;
+      padding-block: 2rem;
+    }
+    .meta {
+      grid-column: 3;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      margin-top: 0.35rem;
+    }
+    dl {
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+  }
+
+  /* Variante sobre fondo oscuro */
+  .dark {
+    border-top-color: var(--line-dark);
+  }
+  .dark .treatment {
+    border-bottom-color: var(--line-dark);
+  }
+  .dark .num {
+    color: var(--sand-300);
+  }
+  .dark .desc,
+  .dark .includes li {
+    color: var(--on-dark-soft);
+  }
+  .dark .includes li,
+  .dark .book {
+    border-color: var(--line-dark);
+  }
+  .dark dt,
+  .dark .note {
+    color: rgb(243 239 229 / 0.6);
+  }
+  .dark .price {
+    color: var(--on-dark);
+  }
+  .dark .book:hover {
+    background: var(--on-dark);
+    border-color: var(--on-dark);
+    color: var(--forest-950);
+  }
+</style>

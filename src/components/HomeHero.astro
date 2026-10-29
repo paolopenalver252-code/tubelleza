@@ -1,0 +1,200 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from './Icon.astro';
+import { site, whatsappLink } from '@/data/site';
+// Misma foto que usa el hero de la web actual: la cabina principal real del centro.
+import hero from '@/assets/images/centro/cabina-vista-general.jpg';
+---
+
+<section class="hero on-dark" aria-labelledby="hero-title">
+  <Picture
+    src={hero}
+    formats={['avif', 'webp']}
+    fallbackFormat="jpg"
+    widths={[640, 960, 1280, 1600, 1920]}
+    sizes="100vw"
+    alt="Cabina principal del centro con camillas, estanterías de productos, cortinas verdes y una pared de flores"
+    class="hero-img"
+    loading="eager"
+    fetchpriority="high"
+    quality={72}
+  />
+  <div class="hero-shade" aria-hidden="true"></div>
+
+  <div class="hero-inner wrap">
+    <div class="hero-copy">
+      <p class="eyebrow">Spa privado · Palma de Mallorca</p>
+      <h1 id="hero-title" class="display">
+        El centro entero,<br /><em>solo para usted.</em>
+      </h1>
+      <p class="hero-text">
+        Masajes, rituales y un circuito con jacuzzi y sauna de infracarbono en un espacio que se cierra en
+        exclusiva para cada cita, individual o en pareja.
+      </p>
+      <div class="btn-row">
+        <a class="btn btn-light" href={whatsappLink()} target="_blank" rel="noopener">
+          <Icon name="whatsapp" /> Reservar por WhatsApp
+        </a>
+        <a class="btn btn-ghost-light" href="#experiencias">Explorar experiencias</a>
+      </div>
+    </div>
+
+    <dl class="hero-facts">
+      <div>
+        <dt>Horario</dt>
+        <dd>{site.hours.label}, {site.hours.time}</dd>
+      </div>
+      <div>
+        <dt>Reserva</dt>
+        <dd>{site.hours.note}</dd>
+      </div>
+      <div>
+        <dt>Dónde</dt>
+        <dd>{site.address.district}, Palma</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    min-height: max(620px, min(100svh, 1100px));
+    color: var(--on-dark);
+    background: var(--forest-950);
+    overflow: hidden;
+  }
+
+  .hero :global(picture),
+  .hero :global(.hero-img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+  }
+
+  .hero :global(.hero-img) {
+    object-fit: cover;
+    /* Centra la camilla y la pared de flores; las estanterías quedan bajo el texto. */
+    object-position: 50% 55%;
+  }
+
+  .hero-shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(90deg, rgb(20 26 18 / 0.82) 0%, rgb(20 26 18 / 0.5) 38%, rgb(20 26 18 / 0.05) 70%),
+      linear-gradient(0deg, rgb(20 26 18 / 0.75) 0%, rgb(20 26 18 / 0) 45%),
+      rgb(28 32 28 / 0.06);
+  }
+
+  .hero-inner {
+    /* Más ancho que el contenedor general: en pantallas grandes el texto queda a la izquierda, fuera de las figuras. */
+    width: min(100% - 2 * var(--gutter), 1720px);
+    display: grid;
+    align-content: end;
+    gap: 3rem;
+    padding-top: calc(var(--header-h) + 3rem);
+    /* Deja libre la esquina inferior para el botón flotante de WhatsApp. */
+    padding-bottom: 5.5rem;
+  }
+
+  .hero-copy {
+    max-width: 40rem;
+  }
+
+  .hero-copy > * + * {
+    margin-top: 1.5rem;
+  }
+
+  .hero h1 {
+    margin-top: 1.25rem;
+  }
+
+  .hero-text {
+    max-width: 33rem;
+    font-size: var(--step-1);
+    line-height: 1.55;
+    color: var(--on-dark-soft);
+  }
+
+  .btn-row {
+    padding-top: 0.5rem;
+  }
+
+  .hero-facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0;
+    border-top: 1px solid var(--line-dark);
+  }
+
+  .hero-facts div {
+    padding: 1rem 1rem 0 0;
+  }
+
+  .hero-facts div + div {
+    padding-left: 1rem;
+    border-left: 1px solid var(--line-dark);
+  }
+
+  .hero-facts dt {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sand-300);
+  }
+
+  .hero-facts dd {
+    margin: 0.35rem 0 0;
+    font-size: 0.92rem;
+    color: var(--on-dark);
+  }
+
+  @media (max-width: 759px) {
+    .hero :global(.hero-img) {
+      object-position: 48% 50%;
+    }
+    .hero-shade {
+      background:
+        linear-gradient(0deg, rgb(20 26 18 / 0.94) 0%, rgb(20 26 18 / 0.62) 42%, rgb(20 26 18 / 0) 68%),
+        rgb(28 32 28 / 0.12);
+    }
+    /* En móvil los datos rápidos se omiten: aparecen en la sección de reserva. */
+    .hero-facts {
+      display: none;
+    }
+    .hero .btn-row .btn {
+      flex: 1 1 100%;
+    }
+  }
+
+  @media (min-width: 760px) {
+    .hero-inner {
+      padding-bottom: 6.25rem;
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .hero-inner {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+    .hero-facts {
+      grid-template-columns: 1fr;
+      width: 15rem;
+      border-top: 0;
+    }
+    .hero-facts div,
+    .hero-facts div + div {
+      padding: 0.9rem 0;
+      border-left: 0;
+      border-top: 1px solid var(--line-dark);
+    }
+  }
+</style>

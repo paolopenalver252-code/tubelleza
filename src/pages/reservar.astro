@@ -1,0 +1,83 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import BookingSection from '@/components/BookingSection.astro';
+import Icon from '@/components/Icon.astro';
+import { site } from '@/data/site';
+import { businessJsonLd } from '@/data/seo';
+---
+
+<BaseLayout
+  title="Reservar cita y contacto | Tu Belleza Holística, Palma de Mallorca"
+  description="Reserve su cita de masaje o spa privado en Palma por WhatsApp o teléfono (+34 610 25 06 21). Carrer de Tomàs Forteza 11, Llevant. Abierto de lunes a domingo de 08:00 a 21:00."
+  overlayHeader={false}
+  jsonLd={businessJsonLd}
+>
+  <BookingSection title="Reserve su cita" headingLevel="h1" />
+
+  <section class="section-tight" aria-labelledby="more-title">
+    <div class="wrap more">
+      <h2 id="more-title" class="h3">Antes de su visita</h2>
+      <ul>
+        <li>
+          <h3>Cambios y cancelaciones</h3>
+          <p class="muted">
+            Consulte la política de cancelación de citas vigente.
+            <a class="link-arrow" href={site.legal[5].href} target="_blank" rel="noopener">Ver política <Icon name="arrow-up-right" /></a>
+          </p>
+        </li>
+        <li>
+          <h3>Vales regalo</h3>
+          <p class="muted">
+            Si tiene un vale, indíquelo en su mensaje al reservar.
+            <a class="link-arrow" href="/vales-regalo/">Ver vales <Icon name="arrow" /></a>
+          </p>
+        </li>
+        <li>
+          <h3>Redes sociales</h3>
+          <p class="muted">
+            Novedades y promociones en
+            <a href={site.social.instagram} target="_blank" rel="noopener">Instagram</a>,
+            <a href={site.social.facebook} target="_blank" rel="noopener">Facebook</a> y
+            <a href={site.social.tiktok} target="_blank" rel="noopener">TikTok</a>.
+          </p>
+        </li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .more {
+    display: grid;
+    gap: 2rem;
+  }
+
+  ul {
+    list-style: none;
+    display: grid;
+    gap: 2rem;
+  }
+
+  h3 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+  }
+
+  li p {
+    margin-top: 0.5rem;
+  }
+
+  li .link-arrow {
+    margin-top: 0.6rem;
+    color: var(--ink);
+  }
+
+  @media (min-width: 860px) {
+    .more {
+      grid-template-columns: 1fr 3fr;
+    }
+    ul {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

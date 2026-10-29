@@ -1,0 +1,185 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import RelatedLinks from '@/components/RelatedLinks.astro';
+import BookingSection from '@/components/BookingSection.astro';
+import Icon from '@/components/Icon.astro';
+import { giftVouchers, giftVoucherValidity } from '@/data/services';
+import { site, whatsappLink } from '@/data/site';
+import heroImg from '@/assets/images/experiencias/masaje-facial-toalla-verde.png';
+---
+
+<BaseLayout
+  title="Vales regalo de spa y masajes en Palma | Tu Belleza Holística"
+  description="Vales regalo de 50 €, 90 € y 130 € para masajes, spa privado y tratamientos en Palma de Mallorca. Válidos durante 3 meses desde su compra."
+  ogImage={heroImg}
+>
+  <PageHero
+    eyebrow="Vales regalo"
+    title="Regale bienestar,"
+    accent="en privado"
+    intro="Vales canjeables por las experiencias del centro, para regalar un momento de calma a quien usted quiera."
+    image={heroImg}
+    alt="Masaje facial con las manos de la terapeuta sobre el rostro de una clienta"
+    position="50% 45%"
+  />
+
+  <section class="section" aria-labelledby="vales-title">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <p class="eyebrow">Importes</p>
+        <h2 id="vales-title" class="h2">Tres vales, <em>todas las experiencias</em></h2>
+        <p class="lead">{giftVoucherValidity}</p>
+      </div>
+
+      <ul class="vouchers">
+        {
+          giftVouchers.map((v, i) => (
+            <li class="voucher" data-reveal style={`--delay:${i * 0.08}s`}>
+              <p class="v-brand">Tu Belleza <em>Holística</em></p>
+              <p class="v-amount">{v.amount}</p>
+              <p class="v-label">Vale regalo</p>
+              <p class="v-valid">Válido 3 meses desde su compra</p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="how" data-reveal>
+        <div>
+          <h3 class="h3">Cómo conseguirlo</h3>
+          <p class="muted">
+            Los vales se compran en la tienda online actual del centro o directamente por WhatsApp. Quien lo reciba solo
+            tiene que contactar con el centro para reservar su cita.
+          </p>
+        </div>
+        <div class="btn-row">
+          <a class="btn" href={site.shopUrl} target="_blank" rel="noopener">
+            Comprar en la tienda online <Icon name="arrow-up-right" />
+          </a>
+          <a class="btn btn-ghost" href={whatsappLink('un vale regalo')} target="_blank" rel="noopener">
+            <Icon name="whatsapp" /> Pedir por WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <RelatedLinks
+    title="Ideas para regalar"
+    links={[
+      { href: '/spa-privado/', label: 'Spa privado', text: 'Jacuzzi, sauna y aromaterapia.' },
+      { href: '/parejas/', label: 'En pareja', text: 'Un ritual para compartir.' },
+      { href: '/masajes/', label: 'Masajes', text: 'Relajantes, terapéuticos o faciales.' },
+    ]}
+  />
+
+  <BookingSection title="¿Tiene un vale? Reserve su cita" subject="una cita con mi vale regalo" />
+</BaseLayout>
+
+<style>
+  .head {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .vouchers {
+    list-style: none;
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .voucher {
+    position: relative;
+    display: grid;
+    align-content: space-between;
+    gap: 0.4rem;
+    aspect-ratio: 1.6;
+    padding: clamp(1.4rem, 3vw, 2rem);
+    border-radius: 6px;
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgb(162 173 140 / 0.35), transparent 60%),
+      var(--forest-900);
+    color: var(--on-dark);
+    overflow: hidden;
+  }
+
+  .voucher::after {
+    content: '';
+    position: absolute;
+    inset: 0.6rem;
+    border: 1px solid var(--line-dark);
+    border-radius: 3px;
+    pointer-events: none;
+  }
+
+  .voucher:nth-child(2) {
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgb(217 204 180 / 0.35), transparent 60%),
+      var(--olive-700);
+  }
+
+  .voucher:nth-child(3) {
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgb(217 204 180 / 0.3), transparent 60%),
+      var(--wood-700);
+  }
+
+  .v-brand {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+  }
+
+  .v-amount {
+    font-family: var(--font-serif);
+    font-size: clamp(3rem, 2rem + 4vw, 4.4rem);
+    line-height: 1;
+    margin-top: auto;
+  }
+
+  .v-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sand-300);
+  }
+
+  .v-valid {
+    font-size: 0.82rem;
+    color: var(--on-dark-soft);
+  }
+
+  .how {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-top: 2rem;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .how h3 + p {
+    margin-top: 0.75rem;
+    max-width: 36rem;
+  }
+
+  @media (min-width: 760px) {
+    .vouchers {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 960px) {
+    .how {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .how .btn {
+      width: 100%;
+    }
+  }
+</style>
